@@ -1,5 +1,4 @@
 #include "ngramcorrelation.h"
-#include <iostream>
 
 NGramCorrelation::NGramCorrelation(const std::string & word1,
                                    const std::string & word2)
@@ -11,17 +10,22 @@ NGramCorrelation::NGramCorrelation(const std::string & word1,
 }
 
 std::string NGramCorrelation::getSource(const std::string & word1,
-                                        const std::string & word2) const {
-  std::stringstream source;
+                                        const std::string & word2,
+                                        uint16_t yearStart,
+                                        uint16_t yearEnd) const {
 
   //form request
-  //TODO remove hardcoded request fields
   std::stringstream request;
   request << "https://books.google.com/ngrams/graph?content=";
-  request << word1 << "%2C+" << word2;
-  request << "&year_start=1500&year_end=2008&corpus=15&smoothing=3&direct_url=t1%3B%2C";
-  request <<  word1 << "%3B%2Cc0%3B.t1%3B%2C" << word2 << "%3B%2Cc0";
+  request << word1 << "%2C+" << word2 <<
+             "&year_start=" << yearStart <<
+             "&year_end=" << yearEnd;
+  request <<  "&direct_url=t1%3B%2C" <<
+              word1 << "%3B%2Cc0%3B.t1%3B%2C" <<
+              word2 << "%3B%2Cc0";
 
+  //get source
+  std::stringstream source;
   source << curlpp::options::Url(request.str());
   return std::move(source.str());
 }
@@ -53,9 +57,8 @@ timeseries NGramCorrelation::parseSource(const std::string & source) const {
 }
 
 void NGramCorrelation::calculateCorrelation(const timeseries & data) {
-  long double average1, average2;
-  average1 = std::accumulate(data[0].begin(), data[0].end(), 0.0l)/data[0].size();
-  average2 = std::accumulate(data[1].begin(), data[1].end(), 0.0l)/data[1].size();
+  long double average1 = std::accumulate(data[0].begin(), data[0].end(), 0.0l) / data[0].size();
+  long double average2 = std::accumulate(data[1].begin(), data[1].end(), 0.0l) / data[1].size();
   long double sum1 = 0, sum2 = 0, sum3 = 0;
   for(size_t i = 0, size = data[0].size(); i < size; ++i) {
     sum1 += (data[0][i] - average1) * (data[1][i] - average2);

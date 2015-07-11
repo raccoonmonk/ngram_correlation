@@ -25,9 +25,13 @@ private:
    * \brief getSource get html data from google
    * \param word1
    * \param word2
+   * \param yearStart
    * \return raw http response
    */
-  std::string getSource(const std::string & word1, const std::string & word2) const;
+  std::string getSource(const std::string & word1,
+                        const std::string & word2,
+                        uint16_t yearStart = 1500,
+                        uint16_t yearEnd = 2012) const;
 
   /*!
    * \brief parseSource get data from html source
