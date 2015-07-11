@@ -16,7 +16,7 @@ using timeseries = std::vector<std::vector<long double>>;
 class NGramCorrelation
 {
 public:
-  NGramCorrelation(const std::string & word1, const std::string & word2X);
+  NGramCorrelation(const std::string & word1, const std::string & word2);
   const long double & getCorrelation(); //returns final correlation
 
 private:
@@ -30,8 +30,8 @@ private:
    */
   std::string getSource(const std::string & word1,
                         const std::string & word2,
-                        uint16_t yearStart = 1500,
-                        uint16_t yearEnd = 2012) const;
+                        const uint16_t yearStart = 1500,
+                        const uint16_t yearEnd = 2012) const;
 
   /*!
    * \brief parseSource get data from html source

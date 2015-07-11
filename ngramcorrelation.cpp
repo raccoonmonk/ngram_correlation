@@ -11,8 +11,8 @@ NGramCorrelation::NGramCorrelation(const std::string & word1,
 
 std::string NGramCorrelation::getSource(const std::string & word1,
                                         const std::string & word2,
-                                        uint16_t yearStart,
-                                        uint16_t yearEnd) const {
+                                        const uint16_t yearStart,
+                                        const uint16_t yearEnd) const {
 
   //form request
   std::stringstream request;
