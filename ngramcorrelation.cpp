@@ -1,5 +1,15 @@
 #include "ngramcorrelation.h"
 
+#include <sstream>
+#include <utility>
+#include <regex>
+#include <cmath>
+#include <curlpp/cURLpp.hpp>
+#include <curlpp/Easy.hpp>
+#include <curlpp/Options.hpp>
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/json_parser.hpp>
+
 NGramCorrelation::NGramCorrelation(const std::string & word1,
                                    const std::string & word2)
   : m_correlation(0)
@@ -27,7 +37,7 @@ std::string NGramCorrelation::getSource(const std::string & word1,
   //get source
   std::stringstream source;
   source << curlpp::options::Url(request.str());
-  return std::move(source.str());
+  return source.str();
 }
 
 timeseries NGramCorrelation::parseSource(const std::string & source) const {
@@ -53,7 +63,7 @@ timeseries NGramCorrelation::parseSource(const std::string & source) const {
     }
     ++i;
   }
-  return std::move(vec);
+  return vec;
 }
 
 void NGramCorrelation::calculateCorrelation(const timeseries & data) {
@@ -70,6 +80,6 @@ void NGramCorrelation::calculateCorrelation(const timeseries & data) {
   m_correlation = sum1 / std::sqrt(sum2 * sum3);
 }
 
-const long double & NGramCorrelation::getCorrelation() {
+long double NGramCorrelation::getCorrelation() {
   return m_correlation;
 }

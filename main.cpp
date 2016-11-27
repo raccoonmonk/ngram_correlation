@@ -1,10 +1,11 @@
 #include <iostream>
+#include <algorithm>
 #include "ngramcorrelation.h"
 
 int main()
 {
-  std::cout << "Correlation coefficient between 2 phrases using Google Books NGrams" << std::endl;
-  std:: cout << "Enter 2 phrases in the separate lines: " << std::endl;
+  std::cout << "Correlation coefficient between 2 phrases using Google Books NGrams\n";
+  std:: cout << "Enter 2 phrases in the separate lines: \n";
   std::string word1, word2;
   std::getline(std::cin, word1);
   std::getline(std::cin, word2);

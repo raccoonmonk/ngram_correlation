@@ -1,15 +1,8 @@
 #ifndef NGRAMCORRELATION_H
 #define NGRAMCORRELATION_H
 
-#include <sstream>
-#include <utility>
-#include <regex>
-#include <cmath>
-#include <curlpp/cURLpp.hpp>
-#include <curlpp/Easy.hpp>
-#include <curlpp/Options.hpp>
-#include <boost/property_tree/ptree.hpp>
-#include <boost/property_tree/json_parser.hpp>
+#include <vector>
+#include <string>
 
 using timeseries = std::vector<std::vector<long double>>;
 
@@ -17,7 +10,7 @@ class NGramCorrelation
 {
 public:
   NGramCorrelation(const std::string & word1, const std::string & word2);
-  const long double & getCorrelation(); //returns final correlation
+  long double getCorrelation(); //returns final correlation
 
 private:
 
@@ -48,4 +41,5 @@ private:
 
   long double m_correlation; //! correlation coefficient value
 };
+
 #endif // NGRAMCORRELATION_H
